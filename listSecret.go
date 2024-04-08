@@ -11,24 +11,19 @@ import (
 )
 
 func main() {
-	// 创建空白配置
 	config := &rest.Config{
 		Host: "YOUR-HOST",
 	}
 	config.BearerToken = "YOUR-TOKEN"
 	config.Insecure = true
-	// 创建 Kubernetes 客户端
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
 	}
-	// 获取 Secret 列表
 	secrets, err := clientset.CoreV1().Secrets("").List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		log.Fatalf("Failed to list secrets: %v", err)
 	}
-
-	// 打印 Secret 信息
 	fmt.Println("Secrets:")
 	for _, secret := range secrets.Items {
 		fmt.Printf("Name: %s\n", secret.Name)
