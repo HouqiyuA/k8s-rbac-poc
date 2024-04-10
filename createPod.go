@@ -24,7 +24,7 @@ func main() {
 	pod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "nginx-pod-mount2",
-			Namespace: "kubevirt",
+			Namespace: "default",
 		},
 		Spec: corev1.PodSpec{
 			Containers: []corev1.Container{
@@ -65,7 +65,7 @@ func main() {
 		},
 	}
 
-	createdPod, err := clientset.CoreV1().Pods("kubevirt").Create(context.TODO(), pod, metav1.CreateOptions{})
+	createdPod, err := clientset.CoreV1().Pods("default").Create(context.TODO(), pod, metav1.CreateOptions{})
 	if err != nil {
 		panic(err.Error())
 	}
